@@ -1,8 +1,10 @@
-import { useState, useEffect, Suspense } from 'react'
-//Gallery
+import { useState, useEffect, Fragment, Suspense } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './Components/Gallery'
 import Searchbar from './Components/Searchbar'
 import { createResource as fetchData } from './helper'
+import AlbumView from './Components/AlbumView'
+import ArtistView from './Components/ArtistView'
 
 function App() {
   const [search, setSearch] = useState('')
@@ -23,7 +25,7 @@ function App() {
   const renderGallery = () => {
     if(data) {
       return (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<h1>Loading...</h1>}>
           <Gallery data={data} />
         </Suspense>
       )
@@ -32,9 +34,19 @@ function App() {
 
   return (
     <div>
-      <Searchbar handleSearch={handleSearch} />
       {message}
-      {renderGallery()}
+      <Router>
+        <Routes>
+          <Route path="/" element ={
+            <Fragment>
+              <Searchbar handleSearch={handleSearch} />
+              {renderGallery()}
+            </Fragment>
+          } />
+          <Route path="/album/:id" element={<AlbumView />} />
+          <Route path="/artist/:id" element={<ArtistView />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
