@@ -17,6 +17,10 @@ function App() {
     setSearch(term)
   }
 
+  const centeredStyle = {
+    'text-align':'center'
+  }
+
   useEffect(() => {
     if(search) {
       const fetchData = async () => {
@@ -46,7 +50,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div style={centeredStyle}>
       {message}
       <Router>
         <Routes>

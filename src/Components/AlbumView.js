@@ -1,13 +1,13 @@
 // These components will be making separate API calls from the app
 // component to serve specific data about a given album
 import { useState, useEffect, Suspense } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from './Spinner'
 
 function AlbumView() {
+    const navigate = useNavigate()
     const { id } = useParams()
     const [ albumData, setAlbumData ] = useState([])
-
     useEffect(() => {
         const API_URL = `http://localhost:4000/song/${id}`
         const fetchData = async () => {
@@ -28,7 +28,6 @@ function AlbumView() {
             </div>
         )
     })
-    console.log(albumData)
     let albumTitle = ''
     let artistName = ''
     let releaseDate = 2023
@@ -37,9 +36,18 @@ function AlbumView() {
         artistName = albumData[0].artistName
         releaseDate = new Date(albumData[0].releaseDate).getFullYear()
     }
-    
+    const navButtons = () => {
+        return(
+            <div style={centeredStyle}>
+                <button onClick={() => navigate(-1)}>Back</button>
+                |
+                <button onClick={() => navigate('/')}>Home</button>
+            </div>
+        )
+    }
     return (
         <div>
+            {navButtons()}
             <Suspense fallback={Spinner}>
                 <h1 style={centeredStyle}>{albumTitle}</h1>
                 <h2 style={centeredStyle}>by {artistName}</h2>
