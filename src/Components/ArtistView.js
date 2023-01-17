@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { DataContext } from '../Context/DataContext'
 import Spinner from './Spinner'
 
 function ArtistView() {
     const { id } = useParams()
     const [ artistData, setArtistData ] = useState([])
-    const data = useContext(DataContext)
     const centeredStyle = {
         'text-align' : 'center'
     }
@@ -36,12 +34,10 @@ function ArtistView() {
     }
     return (
         <div>
-            <DataContext.Provider value={data}>
-                <h2 style={centeredStyle}>Artist: { artistName }</h2>
-                <Suspense fallback={Spinner}>
-                    {renderAlbums}
-                </Suspense>
-            </DataContext.Provider>
+            <h2 style={centeredStyle}>Artist: { artistName }</h2>
+            <Suspense fallback={Spinner}>
+                {renderAlbums}
+            </Suspense>
         </div>
     )
 }
