@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './Components/Gallery'
 import Searchbar from './Components/Searchbar'
 import { createResource as fetchData } from './helper'
+import { DataContext } from './Context/DataContext'
 import AlbumView from './Components/AlbumView'
 import ArtistView from './Components/ArtistView'
 
@@ -40,7 +41,9 @@ function App() {
           <Route path="/" element ={
             <Fragment>
               <Searchbar handleSearch={handleSearch} />
-              {renderGallery()}
+              <DataContext.Provider value={data}>
+                {renderGallery()}
+              </DataContext.Provider>
             </Fragment>
           } />
           <Route path="/album/:id" element={<AlbumView />} />
