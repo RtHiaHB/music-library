@@ -6,7 +6,9 @@ function ArtistView() {
     const { id } = useParams()
     const [ artistData, setArtistData ] = useState([])
     const data = useContext(DataContext)
-    console.log(data)
+    const centeredStyle = {
+        'text-align' : 'center'
+    }
     useEffect(() => {
         const API_URL = `http://localhost:4000/album/${id}`
         const fetchData = async () => {
@@ -21,20 +23,20 @@ function ArtistView() {
         return (
             <div key={i}>
                 <Link to={`/album/${album.collectionId}`}>
-                    <p>{album.collectionName}</p>
+                    <p style={centeredStyle}>{album.collectionName}</p>
                 </Link>
             </div>
         )
     })
     const bioData = artistData.filter(entry => entry.wrapperType === 'artist')
-    let artistName
+    let artistName = ''
     if(bioData.length > 0) {
         artistName = bioData[0].artistName
     }
     return (
         <div>
-            <DataContext.Provider>
-                <h2>Artist: { artistName }</h2>
+            <DataContext.Provider value={data}>
+                <h2 style={centeredStyle}>Artist: { artistName }</h2>
                 {renderAlbums}
             </DataContext.Provider>
         </div>

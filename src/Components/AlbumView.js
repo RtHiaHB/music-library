@@ -7,10 +7,43 @@ function AlbumView() {
     const { id } = useParams()
     const [ albumData, setAlbumData ] = useState([])
 
+    useEffect(() => {
+        const API_URL = `http://localhost:4000/song/${id}`
+        const fetchData = async () => {
+            const response = await fetch(API_URL)
+            const resData = await response.json()
+            setAlbumData(resData.results)
+        }
+        fetchData()
+    }, [id])
+    const centeredStyle = {
+        'text-align': 'center'
+    }
+    const justSongs = albumData.filter(entry => entry.wrapperType === 'track')
+    const renderSongs = justSongs.map((song, i) => {
+        return (
+            <div key={i}>
+                <p style={centeredStyle}>{song.trackName}</p>
+            </div>
+        )
+    })
+    console.log(albumData)
+    let albumTitle = ''
+    let artistName = ''
+    let releaseDate = 2023
+    if(albumData.length > 0) {
+        albumTitle = albumData[0].collectionName
+        artistName = albumData[0].artistName
+        releaseDate = new Date(albumData[0].releaseDate).getFullYear()
+    }
+    
     return (
         <div>
-            <h2>The id passed was: {id}</h2>
-            <p>Album Data Goes Here!</p>
+            <h1 style={centeredStyle}>{albumTitle}</h1>
+            <h2 style={centeredStyle}>by {artistName}</h2>
+            <h3 style={centeredStyle}>Released: {releaseDate}</h3>
+            <h3 style={centeredStyle}>Track List:</h3>
+            {renderSongs}
         </div>
     )
 }
