@@ -19,7 +19,20 @@ function App() {
 
   useEffect(() => {
     if(search) {
-      setData(fetchData(search))
+      const fetchData = async () => {
+        const BASE_URL = 'https://itunes.apple.com/search?term='
+        const encodedSearchTerm = encodeURIComponent(search)
+        const url = Base_URL + encodedSearchTerm
+        const response = await fetch(url)
+        const data = await response.json()
+
+        if(data.results.length > 0) {
+          setData(data.results)
+        } else {
+          setMessage('Results not Found')
+        }
+      }
+      fetchData()
     }
   }, [search])
 
