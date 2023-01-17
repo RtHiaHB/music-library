@@ -1,7 +1,8 @@
 // These components will be making separate API calls from the app
 // component to serve specific data about a given album
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
+import Spinner from './Spinner'
 
 function AlbumView() {
     const { id } = useParams()
@@ -39,11 +40,13 @@ function AlbumView() {
     
     return (
         <div>
-            <h1 style={centeredStyle}>{albumTitle}</h1>
-            <h2 style={centeredStyle}>by {artistName}</h2>
-            <h3 style={centeredStyle}>Released: {releaseDate}</h3>
-            <h3 style={centeredStyle}>Track List:</h3>
-            {renderSongs}
+            <Suspense fallback={Spinner}>
+                <h1 style={centeredStyle}>{albumTitle}</h1>
+                <h2 style={centeredStyle}>by {artistName}</h2>
+                <h3 style={centeredStyle}>Released: {releaseDate}</h3>
+                <h3 style={centeredStyle}>Track List:</h3>
+                {renderSongs}
+            </Suspense>
         </div>
     )
 }

@@ -1,6 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { DataContext } from '../Context/DataContext'
+import Spinner from './Spinner'
 
 function ArtistView() {
     const { id } = useParams()
@@ -37,7 +38,9 @@ function ArtistView() {
         <div>
             <DataContext.Provider value={data}>
                 <h2 style={centeredStyle}>Artist: { artistName }</h2>
-                {renderAlbums}
+                <Suspense fallback={Spinner}>
+                    {renderAlbums}
+                </Suspense>
             </DataContext.Provider>
         </div>
     )

@@ -5,7 +5,7 @@ import Searchbar from './Components/Searchbar'
 import { DataContext } from './Context/DataContext'
 import AlbumView from './Components/AlbumView'
 import ArtistView from './Components/ArtistView'
-import spinner from './loading_spinner.gif'
+import Spinner from './Components/Spinner'
 
 function App() {
   const [search, setSearch] = useState('')
@@ -38,7 +38,7 @@ function App() {
   const renderGallery = () => {
     if(data) {
       return (
-        <Suspense fallback={spinner}>
+        <Suspense fallback={Spinner}>
           <Gallery data={data} />
         </Suspense>
       )
