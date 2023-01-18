@@ -1,5 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+//Gallery
 import Gallery from './Components/Gallery'
 import Searchbar from './Components/Searchbar'
 import AlbumView from './Components/AlbumView'
@@ -18,6 +20,7 @@ function App() {
   useEffect(() => {
     if(search) {
       const fetchData = async () => {
+        document.title = `${search} Music`
         const BASE_URL = 'https://itunes.apple.com/search?term='
         const encodedSearchTerm = encodeURIComponent(search)
         const url = BASE_URL + encodedSearchTerm
@@ -40,7 +43,7 @@ function App() {
       {message}
       <Router>
         <Routes>
-          <Route path="/" element ={
+          <Route path="/" element = {
             <Fragment>
               <Searchbar handleSearch={handleSearch} />
               <Gallery data={data} />

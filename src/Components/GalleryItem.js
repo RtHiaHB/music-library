@@ -1,3 +1,4 @@
+import { PROPERTY_TYPES } from '@babel/types'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,7 +17,6 @@ function GalleryItem({ item }) {
         'height': '30vh',
         'border': '1px solid black',
         'margin': '2px',
-        'backgroundImage': `url(${item.artworkUrl100})`,
         'backgroundRepeat': 'no-repeat',
         'backgroundSize': 'cover',
     }
@@ -55,6 +55,8 @@ function GalleryItem({ item }) {
                         {item.collectionName}
                     </Link>
                 </h3>
+                <h4>{item.primaryGenreName}</h4>
+                <h4>{item.releaseDate}</h4>
             </div>
         )
     }    
