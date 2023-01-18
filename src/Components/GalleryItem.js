@@ -1,4 +1,6 @@
+import { PROPERTY_TYPES } from '@babel/types'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function GalleryItem({ item }) {
     const [view, setView] = useState(false)
@@ -15,7 +17,6 @@ function GalleryItem({ item }) {
         'height': '30vh',
         'border': '1px solid black',
         'margin': '2px',
-        'backgroundImage': `url(${item.artworkUrl100})`,
         'backgroundRepeat': 'no-repeat',
         'backgroundSize': 'cover',
     }
@@ -32,10 +33,19 @@ function GalleryItem({ item }) {
     const detailedView = () => {
         return (
             <div style={detailedStyle}>
-                <h3>{item.trackName}</h3>
-                <p>{item.collectionName}</p>
-                <p>{item.primaryGenreName}</p>
-                <p>{item.releaseDate}</p>
+                <h2>{item.trackName}</h2>
+                <h3>
+                    <Link to={`/artist/${item.artistId}`}>
+                        {item.artistName}
+                    </Link>
+                </h3>
+                <h3>
+                    <Link to={`/album/${item.collectionId}`}>
+                        {item.collectionName}
+                    </Link>
+                </h3>
+                <h4>{item.primaryGenreName}</h4>
+                <h4>{item.releaseDate}</h4>
             </div>
         )
     }
